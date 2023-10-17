@@ -20,14 +20,14 @@ npm i
 4. Run the back-end in a development environment:
 
 ```bash
-npm run start
+npm run dev
 ```
 
 ## Building and starting for production
 
 ```bash
 npm run build
-npm start
+npm run dev
 ```
 
 ## What to do when add new ENV VARIABLES
