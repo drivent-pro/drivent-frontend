@@ -5,41 +5,45 @@ import useToken from '../../../../hooks/useToken.js';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
+async function saveTicketInformation(ticketTypeId) {
+  const body = { ticketTypeId };
+  return axios.post(`${import.meta.env.VITE_API_URL}/tickets`, body, config);
+}
+
+function showSuccessNotification() {
+  toast('Informações salvas com sucesso!');
+}
+
+function handleRequestError(error) {
+  console.error(error);
+  toast('Não foi possível salvar suas informações!');
+}
+
+
 export default function ConfirmaBooking({total, ticket, setCardPage}) {
   const token = useToken();
-
-  console.log(ticket)
-
- 
   const config = {
     headers: {
       "Authorization": `Bearer ${token}`
     }
   }
 
-   async function bookTicket (ticket) {
-    
-    const body = {
-      ticketTypeId: ticket.id
-    }
-
+  async function bookingId(ticket) {
+    const ticketTypeId = ticket.id;
+  
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/tickets`, body, config);
-      toast('Informações salvas com sucesso!');
-      setCardPage(true);
+      const response = await saveTicketInformation(ticketTypeId);
+      showSuccessNotification();
       return response.data;
-
-    } catch (err) {
-      console.log(err)
-      toast('Não foi possível salvar suas informações!');
+    } catch (error) {
+      handleRequestError(error);
     }
   }
-
-
+  
   return (
     <>
       <StyledTypography variant="h6">Fechado! O total ficou em <strong>R$ {total},00</strong>. Agora é só confirmar:</StyledTypography>
-      <BookTicketButton onClick={() => bookTicket(ticket)}>RESERVAR INGRESSO</BookTicketButton>
+      <bookingIdButton onClick={() => bookingId(ticket)}>RESERVAR INGRESSO</bookingIdButton>
 
     </>
   )
@@ -54,7 +58,7 @@ const StyledTypography = styled(Typography)`
     color: #000000;
   }
 `;
-const BookTicketButton = styled.button`
+const bookingIdButton = styled.button`
   cursor: pointer;
   padding: 11px;
   border-radius: 4px;

@@ -1,85 +1,70 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Typography from '@mui/material/Typography';
 
+const OptionButton = ({ label, price, isSelected, onClick }) => (
+  <ModalityButton onClick={onClick} className={isSelected ? 'selected' : ''}>
+    <h6>{label}</h6>
+    <p>{`+ R$ ${price}`}</p>
+  </ModalityButton>
+);
 
 export default function OptionsPresencial({ setBookSelected, hotel, setHotel }) {
-  let [ticketSelected, setTicketSelected] = useState(null);
-
-
-  const bookTicket = () =>{
-
-  }
-
   return (
-    <Containerg>
-      
+    <Container>
+      <h1>Opções de Hospedagem</h1>
+      <h2>Selecione a opção de hospedagem desejada:</h2>
       <Buttons>
-        <ModalityButton onClick={() => setHotel(false)}
-          className={hotel === false ? 'selected' : ''}
-        >
-          <h6>Sem Hotel</h6>
-          <p>+ R$ 0</p>
-        </ModalityButton>
-        <ModalityButton onClick={() => setHotel(true)}
-          className={hotel === true ? 'selected' : ''}
-        >
-          <h6>Com Hotel</h6>
-          <p>+ R$ 350</p>
-        </ModalityButton>
+        <OptionButton
+          label="Sem Hotel"
+          price={0}
+          isSelected={!hotel}
+          onClick={() => setHotel(false)}
+        />
+        <OptionButton
+          label="Com Hotel"
+          price={350}
+          isSelected={hotel}
+          onClick={() => setHotel(true)}
+        />
       </Buttons>
-    </Containerg>
-  )
-
+    </Container>
+  );
 }
 
-const Containerg = styled.div`
+
+const Container = styled.div`
   display: flex;
   flex-direction: column;
- // box-shadow: 2px 0 10px 0 rgba(0,0,0,0.1);
   width: 100%;
 
-  h1{
+  h1 {
     font-family: Roboto;
-font-size: 34px;
-font-weight: 400;
-line-height: 40px;
-letter-spacing: 0em;
-text-align: left;
-
-color: #000;
-margin-bottom: 30px;
-
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 40px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #000;
+    margin-bottom: 30px;
   }
-  h2{
 
+  h2 {
     font-family: Roboto;
-font-size: 20px;
-font-weight: 400;
-line-height: 23px;
-letter-spacing: 0em;
-text-align: left;
-
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 23px;
+    letter-spacing: 0em;
+    text-align: left;
     color: #8E8E8E;
-
   }
-
-
-`
-const Options = styled.div`
-
-  display: flex;
- 
- 
- 
-`
-  
+`;
 
 const Buttons = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 40px;
-`
+`;
 
 const ModalityButton = styled.div`
   cursor: pointer;
@@ -93,25 +78,24 @@ const ModalityButton = styled.div`
   justify-content: center;
   margin-right: 24px;
 
-  h6{
+  h6 {
     color: #454545;
     font-size: 16px;
     margin-bottom: 3px;
   }
 
-  p{
+  p {
     color: #898989;
     font-size: 14px;
   }
 
-  &.selected{
+  &.selected {
     border: none;
     background: #FFEED2;
   }
-`
+`;
+
 const StyledTypography = styled(Typography)`
   margin-bottom: 20px!important;
   color: #8E8E8E;
-
-  
 `;
