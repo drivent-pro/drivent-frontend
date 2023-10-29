@@ -5,21 +5,21 @@ import axios from "axios";
 
 export default function Activities() {
   const { userData } = useContext(UserContext);
-  const [infoByUser, setInfoByUser] = useState(null); // Inicialize com null ou um objeto vazio
-  const [loading, setLoading] = useState(true); // Estado de carregamento
+  const [infoByUser, setInfoByUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   function getInfo() {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/users/especify/:${userData.user.email}`)
+      .get(`${import.meta.env.VITE_API_URL}/users/especify/${userData.user.email}`)
       .then((res) => {
         console.log(res.data);
         setInfoByUser(res.data);
-        setLoading(false); // Marque o carregamento como concluído
+        setLoading(false);
         console.log(userData.user.email);
       })
       .catch((error) => {
         console.error(error.response.data);
-        setLoading(false); // Marque o carregamento como concluído em caso de erro
+        setLoading(false);
       });
   }
 
@@ -30,8 +30,7 @@ export default function Activities() {
   if (loading) {
     return <p>Carregando...</p>;
   }
-
-  if (!infoByUser) {
+  if (!infoByUser.infoByEnrollment) {
     return (
       <>
         <Title>Escolha de atividades</Title>
