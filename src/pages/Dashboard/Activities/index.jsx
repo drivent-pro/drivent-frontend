@@ -1,3 +1,91 @@
+import { styled } from "styled-components";
+import UserContext from "../../../contexts/UserContext";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+
 export default function Activities() {
-  return 'Atividades: Em breve!';
+  const { userData } = useContext(UserContext);
+  const [infoByUser, setInfoByUser] = useState(null); // Inicialize com null ou um objeto vazio
+  const [loading, setLoading] = useState(true); // Estado de carregamento
+
+  function getInfo() {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/users/especify/:${userData.user.email}`)
+      .then((res) => {
+        console.log(res.data);
+        setInfoByUser(res.data);
+        setLoading(false); // Marque o carregamento como concluído
+        console.log(userData.user.email);
+      })
+      .catch((error) => {
+        console.error(error.response.data);
+        setLoading(false); // Marque o carregamento como concluído em caso de erro
+      });
+  }
+
+  useEffect(() => {
+    getInfo();
+  }, []);
+
+  if (loading) {
+    return <p>Carregando...</p>;
+  }
+
+  if (!infoByUser) {
+    return (
+      <>
+        <Title>Escolha de atividades</Title>
+        <SubtitleForNoPayment>
+          Você precisa ter confirmado pagamento antes<br /> de fazer a escolha de atividades
+        </SubtitleForNoPayment>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Title>Escolha de atividades</Title>
+      <Subtitle>Primeiro, filtre pelo dia do evento: </Subtitle>
+      <ConteinerDays>
+        <EventDay>Sexta, 22/11</EventDay>
+      </ConteinerDays>
+    </>
+  );
 }
+
+const Title = styled.p`
+  font-size: 34px;
+  line-height: 39.84px;
+  margin-bottom: 37px;
+`
+
+const Subtitle = styled.p`
+  font-size: 20px;
+  color: rgba(142, 142, 142, 1);
+  line-height: 23.44px;
+  margin-bottom: 25px;
+`
+
+const SubtitleForNoPayment = styled.p`
+  font-size: 20px;
+  color: rgba(142, 142, 142, 1);
+  line-height: 23.44px;
+  margin-top: 255px;
+  text-align: center;
+`
+
+const ConteinerDays = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const EventDay = styled.div`
+  background-color: rgba(224, 224, 224, 1);
+  width: 131px;
+  height: 37px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.25);
+`
