@@ -41,6 +41,17 @@ export default function Activities() {
     );
   }
 
+  if (infoByUser.infoByTicket.TicketType.includesHotel === false) {
+    return (
+      <>
+        <Title>Escolha de hotel e quarto</Title>
+        <SubtitleForNoHotel>
+        Sua modalidade de ingresso não necessita escolher<br /> atividade. Você terá acesso a todas as atividades.
+        </SubtitleForNoHotel>
+      </>
+    )
+  }
+
   return (
     <>
       <Title>Escolha de atividades</Title>
@@ -66,6 +77,13 @@ const Subtitle = styled.p`
 `
 
 const SubtitleForNoPayment = styled.p`
+  font-size: 20px;
+  color: rgba(142, 142, 142, 1);
+  line-height: 23.44px;
+  margin-top: 255px;
+  text-align: center;
+`
+const SubtitleForNoHotel = styled.p`
   font-size: 20px;
   color: rgba(142, 142, 142, 1);
   line-height: 23.44px;
