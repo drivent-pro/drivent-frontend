@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import styled from 'styled-components';
 import React from 'react';
 import { IoCheckmarkCircleSharp } from 'react-icons/io5';
+import Message from "./Message";
 
 export default function PaymentComponent({ info }) {
   const [paid, setPaid] = useState(false);
@@ -20,16 +21,7 @@ export default function PaymentComponent({ info }) {
       </>
       {
         paid ?
-          <>
-            <Typography variant="h6" color="textSecondary">Pagamento</Typography>
-            <Container>
-              <Icon />
-              <AlignText>
-                <Title>Pagamento confirmado!</Title>
-                <Subtitle>Prossiga para escolha de hospedagem e atividades</Subtitle>
-              </AlignText>
-            </Container>
-          </> :
+          <Message/> :
           <PaymentForm props={[paid, setPaid]} />
       }
     </>

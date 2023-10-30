@@ -56,7 +56,7 @@ export default function Activities() {
     );
   }
 
-  if (infoByUser.infoByTicket.TicketType.includesHotel === false) {
+  if (infoByUser.infoByTicket.TicketType.includesHotel === false && infoByUser.infoByTicket.TicketType.isRemote === false) {
     return (
       <>
         <Title>Escolha de hotel e quarto</Title>

@@ -5,10 +5,6 @@ import useToken from '../../../../hooks/useToken.js';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
-async function saveTicketInformation(ticketTypeId) {
-  const body = { ticketTypeId };
-  return axios.post(`${import.meta.env.VITE_API_URL}/tickets`, body, config);
-}
 
 function showSuccessNotification() {
   toast('Informações salvas com sucesso!');
@@ -20,7 +16,7 @@ function handleRequestError(error) {
 }
 
 
-export default function ConfirmaBooking({total, ticket, setCardPage}) {
+export default function ConfirmaBooking({ total, ticket, setCardPage }) {
   const token = useToken();
   const config = {
     headers: {
@@ -30,20 +26,21 @@ export default function ConfirmaBooking({total, ticket, setCardPage}) {
 
   async function bookingId(ticket) {
     const ticketTypeId = ticket.id;
-  
+    const body =  {ticketTypeId: ticketTypeId};
+    
     try {
-      const response = await saveTicketInformation(ticketTypeId);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/tickets`, body, config);
       showSuccessNotification();
       return response.data;
     } catch (error) {
       handleRequestError(error);
     }
   }
-  
+
   return (
     <>
       <StyledTypography variant="h6">Fechado! O total ficou em <strong>R$ {total},00</strong>. Agora é só confirmar:</StyledTypography>
-      <bookingIdButton onClick={() => bookingId(ticket)}>RESERVAR INGRESSO</bookingIdButton>
+      <BookingIdButton onClick={() => bookingId(ticket)}>RESERVAR INGRESSO</BookingIdButton>
 
     </>
   )
@@ -58,7 +55,7 @@ const StyledTypography = styled(Typography)`
     color: #000000;
   }
 `;
-const bookingIdButton = styled.button`
+const BookingIdButton = styled.button`
   cursor: pointer;
   padding: 11px;
   border-radius: 4px;
